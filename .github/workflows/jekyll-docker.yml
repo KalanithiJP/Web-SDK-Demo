@@ -26,7 +26,7 @@ jobs:
     - name: Commit files
       run: | 
         git config --local user.email "kalanithi.jp@hyperverge.co"
-        git config --local user.name "Kalanithi"
+        git config --local user.name "KalanithiJP"
         git add .
         git commit -m "Access token generated"
     - name: Push changes
