@@ -23,7 +23,6 @@
     function starOnboarding() {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
-      console.log(process.env.APP_ID, process.env.APP_KEY)
       
       //const raw = JSON.stringify({  });
 
@@ -36,7 +35,7 @@
 
       let accessToken = "";
 
-      fetch("https://hypersnapweb.hyperverge.co/authenticate", requestOptions)
+      fetch("auth.json", requestOptions)
         .then((response) => response.json())
         .then((response) => {
           accessToken = response.data.result.token;
