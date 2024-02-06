@@ -35,7 +35,7 @@
 
       let accessToken = "";
 
-      fetch("auth.json", requestOptions)
+      fetch("./public/auth.json", requestOptions)
         .then((response) => response.json())
         .then((response) => {
           accessToken = response.data.result.token;
