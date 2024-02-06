@@ -23,10 +23,8 @@
     function starOnboarding() {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
-      const appId = APP_ID;
-      const appKey = APP_KEY;
 
-      const raw = JSON.stringify({ appId, appKey });
+      const raw = JSON.stringify({ process.env.APP_ID, process.env.APP_KEY });
 
       const requestOptions = {
         method: "POST",
