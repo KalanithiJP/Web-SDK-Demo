@@ -17,7 +17,7 @@ jobs:
     - name: Get access token
       shell: bash
       run: |
-        curl --location 'https://auth.hyperverge.co/login' --header 'Content-Type: application/json' --data '{"appId": ${{ secrets.APP_ID }},"appKey": {{APP_KEY}},"expiry": 86400}' > auth.json
+        curl --location 'https://auth.hyperverge.co/login' --header 'Content-Type: application/json' --data '{"appId": ${{ secrets.APP_ID }}, "appKey": {{ secrets.APP_KEY }}, "expiry": 86400}' > auth.json
     - name: Commit files
       run: | 
         git config --local user.email "kalanithi.jp@hyperverge.co"
