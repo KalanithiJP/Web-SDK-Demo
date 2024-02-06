@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://hv-camera-web-sg.s3-ap-southeast-1.amazonaws.com/hyperverge-web-sdk@8.1.0/src/sdk.min.js"></script>
+  </head>
+
+  <body>
+    <div>
+      <button type="button" onclick="starOnboarding()">Start Onboarding</button>
+    </div>
+  </body>
+  <script>
+    function dec2hex(dec) {
+      return dec.toString(16).padStart(2, "0");
+    }
+
+    function generateId(len) {
+      var arr = new Uint8Array((len || 40) / 2);
+      window.crypto.getRandomValues(arr);
+      return Array.from(arr, dec2hex).join("");
+    }
+
+    function starOnboarding() {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      const appId = APP_ID;
+      const appKey = APP_KEY;
+
+      const raw = JSON.stringify({ appId, appKey });
+
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+
+      let accessToken = "";
+
+      fetch("https://hypersnapweb.hyperverge.co/authenticate", requestOptions)
+        .then((response) => response.json())
+        .then((response) => {
+          accessToken = response.data.result.token;
+        })
+        .catch((error) => {
+          console.log("error", error);
+          alert("Authentication Failed Please try again");
+        });
+
+      const transactionId = generateId(10);
+      const hyperKycConfig = new window.HyperKycConfig(
+        accessToken,
+        "dtc_cr",
+        transactionId
+      );
+
+      const languageToBeUsed = "id";
+
+      hyperKycConfig.setLanguageUsed(languageToBeUsed);
+
+      console.log(hyperKycConfig);
+      const customInputs = {
+      };
+      //hyperKycConfig.setInputs(customInputs);
+      HyperKYCModule.launch(hyperKycConfig, handler);
+    }
+    
+    const handler = (HyperKycResult) => {
+      console.log(HyperKycResult);
+      if (HyperKycResult.Cancelled) {
+        // user cancelled
+        console.log(HyperKycResult.Cancelled);
+      } else if (HyperKycResult.Failure) {
+        // failure
+        console.log(HyperKycResult.Failure);
+      } else if (HyperKycResult.Success) {
+        // success
+        // Call your function here ()
+        console.log(HyperKycResult.Success);
+      }
+    };
+  </script>
+</html>
