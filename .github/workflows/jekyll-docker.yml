@@ -22,13 +22,7 @@ jobs:
         APP_KEY: ${{ secrets.APP_KEY }}
       shell: bash
       run: |
-        echo 'https://auth.hyperverge.co/login' --header 'Content-Type: application/json' --data '{"appId": "'"$APP_ID"'", "appKey": "'"$APP_KEY"'", "expiry": 86400}'
-    - name: Get access token
-      env:
-        APP_ID: ${{ secrets.APP_ID }}
-        APP_KEY: ${{ secrets.APP_KEY }}
-      shell: bash
-      run: |
+        mkdir public
         curl --location 'https://auth.hyperverge.co/login' --header 'Content-Type: application/json' --data '{"appId": "'"$APP_ID"'", "appKey": "'"$APP_KEY"'", "expiry": 86400}' > /public/auth.json
     - name: Commit files
       run: | 
