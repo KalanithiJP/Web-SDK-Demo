@@ -26,16 +26,9 @@
       
       //const raw = JSON.stringify({  });
 
-      const requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow",
-      };
-
       let accessToken = "";
 
-      fetch("./public/auth.json", requestOptions)
+      fetch("./public/auth.json")
         .then((response) => response.json())
         .then((response) => {
           accessToken = response.data.result.token;
